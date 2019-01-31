@@ -1,12 +1,12 @@
 package cgo
 
 import (
-	"github.com/gin-gonic/gin"
 	"github.com/chent1024/cgo/config"
+	"github.com/gin-gonic/gin"
 )
 
 type Cgo struct {
-	Gin  *gin.Engine
+	Gin *gin.Engine
 }
 
 func New(configPath string) (cgo *Cgo) {
