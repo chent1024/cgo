@@ -6,7 +6,6 @@ import (
 )
 
 type Cgo struct {
-	Conf *config.Config
 	Gin  *gin.Engine
 }
 
@@ -20,10 +19,11 @@ func New(configPath string) (cgo *Cgo) {
 	cfg.New()
 
 	// init gin
-	gin.SetMode(cfg.App.Mode)
+	gin.SetMode(config.Conf.App.Mode)
 	cgo.Gin = gin.Default()
 
 	// init mysql
 	InitMysql()
+
 	return
 }

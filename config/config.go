@@ -5,16 +5,16 @@ import (
 	"github.com/go-ini/ini"
 )
 
-type AppConfig struct {
-	Mode string `ini:"mode"`
-}
-
 type Config struct {
 	Path   string
 	App    AppConfig
 	Db     DbConfig
 	Server ServerConfig
 	Tpl    TemplateConfig
+}
+
+type AppConfig struct {
+	Mode string `ini:"mode"`
 }
 
 var Conf Config
