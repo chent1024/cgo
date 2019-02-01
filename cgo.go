@@ -20,6 +20,10 @@ func New(configPath string) (cgo *Cgo) {
 
 	// init gin
 	gin.SetMode(config.Conf.App.Mode)
+
+	// log to file
+	LogToFile()
+
 	cgo.Gin = gin.Default()
 
 	// init mysql

@@ -12,10 +12,16 @@ var Db *gorm.DB
 
 func InitMysql() {
 	c := config.Conf.Db
-	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=True&loc=Local", c.Username, c.Password, c.Host, c.Database, c.Charset)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=True&loc=Local",
+		c.Username,
+		c.Password,
+		c.Host,
+		c.Database,
+		c.Charset)
+
 	conn, err := gorm.Open("mysql", dsn)
 	if err != nil {
-		Log("db connect fail,", err)
+		Debug("db connect fail,", err)
 		return
 	}
 

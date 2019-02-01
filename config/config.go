@@ -8,6 +8,7 @@ import (
 type Config struct {
 	Path   string
 	App    AppConfig
+	Log    LogConfig
 	Db     DbConfig
 	Server ServerConfig
 	Tpl    TemplateConfig
@@ -27,6 +28,7 @@ func (c *Config) New() {
 	}
 
 	cfg.Section("app").MapTo(&Conf.App)
+	cfg.Section("log").MapTo(&Conf.Log)
 	cfg.Section("server").MapTo(&Conf.Server)
 	cfg.Section("database").MapTo(&Conf.Db)
 	cfg.Section("template").MapTo(&Conf.Tpl)
