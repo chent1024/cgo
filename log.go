@@ -2,7 +2,6 @@ package cgo
 
 import (
 	"fmt"
-	"github.com/chent1024/cgo/config"
 	"github.com/gin-gonic/gin"
 	"io"
 	"os"
@@ -19,7 +18,7 @@ func Debug(format string, values ...interface{}) {
 }
 
 func LogToFile() {
-	cfg := config.Conf.Log
+	cfg := Config.Log
 	if !cfg.SaveLogs {
 		return
 	}
@@ -28,13 +27,15 @@ func LogToFile() {
 
 	gin.DisableConsoleColor()
 
+	now := time.Now()
+
 	// remove history log files
-	oldLogPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", time.Now().AddDate(0, 0, -cfg.LogDays).Format("20060102"))
+	oldLogPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.AddDate(0, 0, -cfg.LogDays).Format("20060102"))
 	os.Remove(oldLogPath)
 
 	// write logs by day
-	logPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", time.Now().Format("20060102"))
-	f, _ := os.Create(logPath)
+	logPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.Format("20060102"))
+	f, _ := os.OpenFile(logPath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
 	gin.DefaultWriter = io.MultiWriter(f)
 
 }

@@ -1,30 +1,22 @@
 package cgo
 
 import (
-	"github.com/chent1024/cgo/config"
 	"github.com/gin-gonic/gin"
 )
 
-type Cgo struct {
-	Gin *gin.Engine
-}
-
-func New(configPath string) (cgo *Cgo) {
-	cgo = &Cgo{}
-
+func New(configPath string) (Cgo *gin.Engine) {
 	// load config
-	cfg := config.Config{
-		Path: configPath,
-	}
-	cfg.New()
+	LoadConfig(configPath)
 
 	// init gin
-	gin.SetMode(config.Conf.App.Mode)
+	gin.SetMode(Config.App.Mode)
 
 	// log to file
 	LogToFile()
 
-	cgo.Gin = gin.Default()
+	Cgo = gin.Default()
+	// load tpl
+	Cgo.LoadHTMLGlob(Config.Tpl.Path)
 
 	// init mysql
 	InitMysql()

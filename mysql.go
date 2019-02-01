@@ -2,7 +2,6 @@ package cgo
 
 import (
 	"fmt"
-	"github.com/chent1024/cgo/config"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"time"
@@ -11,7 +10,7 @@ import (
 var Db *gorm.DB
 
 func InitMysql() {
-	c := config.Conf.Db
+	c := Config.Db
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=True&loc=Local",
 		c.Username,
 		c.Password,
