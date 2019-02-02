@@ -36,5 +36,6 @@ func InitMysql() {
 	Db.DB().SetMaxOpenConns(c.MaxOpenConns)
 	Db.DB().SetConnMaxLifetime(time.Second * time.Duration(c.ConnMaxLifeTime))
 
+	Debug("init mysql connection success")
 	return
 }

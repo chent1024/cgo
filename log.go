@@ -14,7 +14,9 @@ func Debug(format string, values ...interface{}) {
 		format += "\n"
 	}
 
-	fmt.Fprintf(os.Stderr, "[Cgo-debug] "+format, values...)
+	t := time.Now().Format("2006/01/02 - 15:04:05")
+	format = fmt.Sprintf("[Cgo] %v | "+format, t)
+	fmt.Fprintf(gin.DefaultWriter, format, values...)
 }
 
 func LogToFile() {
