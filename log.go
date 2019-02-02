@@ -39,5 +39,6 @@ func LogToFile() {
 	logFile := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.Format("20060102"))
 	f, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	gin.DefaultWriter = io.MultiWriter(f)
+	gin.DefaultErrorWriter = io.MultiWriter(f)
 
 }
