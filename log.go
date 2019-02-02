@@ -31,12 +31,13 @@ func LogToFile() {
 	now := time.Now()
 
 	// remove history log files
-	oldLogPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.AddDate(0, 0, -cfg.LogDays).Format("20060102"))
-	os.Remove(oldLogPath)
+	daysAgo := now.AddDate(0, 0, -cfg.LogDays).Format("20060102")
+	oldLogFile := fmt.Sprintf(cfg.Path+"/cgo_%s.log", daysAgo)
+	os.Remove(oldLogFile)
 
 	// write logs by day
-	logPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.Format("20060102"))
-	f, _ := os.OpenFile(logPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	logFile := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.Format("20060102"))
+	f, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	gin.DefaultWriter = io.MultiWriter(f)
 
 }
