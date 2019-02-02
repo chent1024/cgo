@@ -22,7 +22,6 @@ func LogToFile() {
 	if !cfg.SaveLogs {
 		return
 	}
-
 	os.MkdirAll(cfg.Path, os.ModePerm)
 
 	gin.DisableConsoleColor()
@@ -35,7 +34,7 @@ func LogToFile() {
 
 	// write logs by day
 	logPath := fmt.Sprintf(cfg.Path+"/cgo_%s.log", now.Format("20060102"))
-	f, _ := os.OpenFile(logPath, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+	f, _ := os.OpenFile(logPath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	gin.DefaultWriter = io.MultiWriter(f)
 
 }
