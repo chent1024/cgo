@@ -13,6 +13,7 @@ var Config struct {
 	Tpl    config.TemplateConfig
 }
 
+// load config to &Config
 func LoadConfig(path string) {
 	cfg, err := ini.Load(path)
 	if err != nil {

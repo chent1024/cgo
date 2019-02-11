@@ -9,6 +9,7 @@ import (
 
 var Db *gorm.DB
 
+// init mysql by gorm
 func InitMysql() {
 	c := Config.Db
 	dsn := fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=%s&parseTime=True&loc=Local",

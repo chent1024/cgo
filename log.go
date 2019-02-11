@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// Debug
 func Debug(format string, values ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
 		format += "\n"
@@ -19,6 +20,7 @@ func Debug(format string, values ...interface{}) {
 	fmt.Fprintf(gin.DefaultWriter, format, values...)
 }
 
+// Write gin log to file
 func LogToFile() {
 	cfg := Config.Log
 	if !cfg.SaveLogs {
