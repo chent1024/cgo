@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// New cgo with gin
 func New(configPath string) (Cgo *gin.Engine) {
 	// load config
 	LoadConfig(configPath)

@@ -5,6 +5,7 @@ import (
 	"github.com/go-ini/ini"
 )
 
+// define Config struct
 var Config struct {
 	App    config.AppConfig
 	Log    config.LogConfig
