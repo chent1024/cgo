@@ -1,5 +1,6 @@
 package config
 
+// 数据库
 type DbConfig struct {
 	Debug           bool   `ini:"debug"`
 	Host            string `ini:"host"`

@@ -1,5 +1,6 @@
 package config
 
+// server服务
 type ServerConfig struct {
 	Address      string `ini:"address"`
 	ReadTimeout  int    `ini:"read_timeout"`
