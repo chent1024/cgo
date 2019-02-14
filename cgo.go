@@ -2,12 +2,18 @@ package cgo
 
 import (
 	"github.com/gin-gonic/gin"
+	"html/template"
 )
 
+type CgoConfig struct {
+	ConfigPath string
+	TplFuncMap template.FuncMap
+}
+
 // New cgo with gin
-func New(configPath string) (Cgo *gin.Engine) {
+func New(conf *CgoConfig) (Cgo *gin.Engine) {
 	// load config
-	LoadConfig(configPath)
+	LoadConfig(conf.ConfigPath)
 
 	// init gin
 	gin.SetMode(Config.App.Mode)
@@ -15,8 +21,15 @@ func New(configPath string) (Cgo *gin.Engine) {
 	// log to file
 	LogToFile()
 
+	// new gin
 	Cgo = gin.Default()
-	// load tpl
+	funcs := template.FuncMap{
+		"Unescaped": Unescaped,
+	}
+	for k, v := range conf.TplFuncMap {
+		funcs[k] = v
+	}
+	Cgo.SetFuncMap(funcs)
 	Cgo.LoadHTMLGlob(Config.Tpl.Path)
 
 	// init mysql
