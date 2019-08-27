@@ -1,0 +1,29 @@
+[app]
+mode = 'test'
+timezone = 'Asia/Shanghai'
+
+[server]
+address = ':9999'
+readTimeout = 30
+writeTimeout = 30
+ideleTimeout = 10
+
+[db]
+debug = true
+host = '127.0.0.1'
+charset = 'utf8'
+username = 'root'
+password = 'root'
+database = 'juzizm_ppt'
+tablePrefix = 'jz_'
+maxIdleConns = 10
+maxOpenConns = 10
+connMaxLifeTime = 30
+
+[log]
+saveLogs = true
+path = './logs'
+logDays = 7
+
+[tpl]
+path = './templetes'

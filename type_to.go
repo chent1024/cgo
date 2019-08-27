@@ -17,13 +17,13 @@ type V interface {
 	Bool() bool
 }
 
+type t struct {
+	v interface{}
+}
+
 // TypeTo 获取转换interface{}
 func TypeTo(v interface{}) V {
 	return &t{v: v}
-}
-
-type t struct {
-	v interface{}
 }
 
 func (t *t) String() string {

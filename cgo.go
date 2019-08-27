@@ -3,6 +3,7 @@ package cgo
 import (
 	"github.com/gin-gonic/gin"
 	"html/template"
+	"time"
 )
 
 type CgoConfig struct {
@@ -14,6 +15,9 @@ type CgoConfig struct {
 func New(conf *CgoConfig) (Cgo *gin.Engine) {
 	// load config
 	LoadConfig(conf.ConfigPath)
+
+	// set timezone
+	time.LoadLocation(Config.App.Timezone)
 
 	// init gin
 	gin.SetMode(Config.App.Mode)
@@ -31,9 +35,10 @@ func New(conf *CgoConfig) (Cgo *gin.Engine) {
 	}
 	Cgo.SetFuncMap(funcs)
 	Cgo.LoadHTMLGlob(Config.Tpl.Path)
+	Cgo.Routes()
 
 	// init mysql
-	InitMysql()
+	NewMysql()
 
 	return
 }
