@@ -26,4 +26,4 @@ path = './logs'
 logDays = 7
 
 [tpl]
-path = './templetes'
+path = './template/*'
