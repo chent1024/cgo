@@ -12,7 +12,7 @@ type CgoConfig struct {
 }
 
 // New cgo with gin
-func New(conf *CgoConfig) (Cgo *gin.Engine) {
+func New(conf *CgoConfig) (g *gin.Engine) {
 	// load config
 	LoadConfig(conf.ConfigPath)
 
@@ -26,16 +26,16 @@ func New(conf *CgoConfig) (Cgo *gin.Engine) {
 	LogToFile()
 
 	// new gin
-	Cgo = gin.Default()
+	g = gin.Default()
 	funcs := template.FuncMap{
 		"Unescaped": Unescaped,
 	}
 	for k, v := range conf.TplFuncMap {
 		funcs[k] = v
 	}
-	Cgo.SetFuncMap(funcs)
-	Cgo.LoadHTMLGlob(Config.Tpl.Path)
-	Cgo.Routes()
+	g.SetFuncMap(funcs)
+	g.LoadHTMLGlob(Config.Tpl.Path)
+	g.Routes()
 
 	// init mysql
 	NewMysql()
