@@ -22,7 +22,7 @@ func NewMysql() {
 
 	conn, err := gorm.Open("mysql", dsn)
 	if err != nil {
-		Debug("db connect fail,", err, dsn)
+		Debug("db connect fail,", err)
 		return
 	}
 
