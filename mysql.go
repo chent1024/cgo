@@ -2,9 +2,10 @@ package cgo
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"time"
 )
 
 var Db *gorm.DB
@@ -19,10 +20,9 @@ func NewMysql() {
 		c.Database,
 		c.Charset,
 		Config.App.Timezone)
-
 	conn, err := gorm.Open("mysql", dsn)
 	if err != nil {
-		Debug("db connect fail, %v", err)
+		Debug("mysql connect fail, %v", err)
 		return
 	}
 
@@ -38,19 +38,19 @@ func NewMysql() {
 	Db.DB().SetMaxOpenConns(c.MaxOpenConns)
 	Db.DB().SetConnMaxLifetime(time.Second * time.Duration(c.ConnMaxLifeTime))
 
-	Debug("init mysql connection success")
+	Debug("mysql connect success")
 	return
 }
 
 // 查询分页数据
-func Pagination(page int, pageSize int, out interface{}, orderBy string, where ...interface{}) error {
+func Pagination(page int, pageSize int, out interface{}, orderBy string, where string) error {
 	if pageSize < 0 || page < 0 {
 		return nil
 	}
 
 	var db *gorm.DB
 	db = Db.Offset((page - 1) * pageSize).Limit(pageSize)
-	if len(where) > 0 {
+	if where != "" {
 		db = db.Where(where)
 	}
 

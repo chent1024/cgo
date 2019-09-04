@@ -1,9 +1,10 @@
 package cgo
 
 import (
-	"github.com/gin-gonic/gin"
 	"html/template"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 type CgoConfig struct {
@@ -13,31 +14,15 @@ type CgoConfig struct {
 
 // New cgo with gin
 func New(conf *CgoConfig) (g *gin.Engine) {
-	// load config
-	LoadConfig(conf.ConfigPath)
-
-	// set timezone
+	NewConfig(conf.ConfigPath)
 	time.LoadLocation(Config.App.Timezone)
 
-	// init gin
 	gin.SetMode(Config.App.Mode)
-
 	// log to file
-	LogToFile()
-
-	// new gin
+	NewLog()
 	g = gin.Default()
-	funcs := template.FuncMap{
-		"Unescaped": Unescaped,
-	}
-	for k, v := range conf.TplFuncMap {
-		funcs[k] = v
-	}
-	g.SetFuncMap(funcs)
-	g.LoadHTMLGlob(Config.Tpl.Path)
 	g.Routes()
-
-	// init mysql
+	NewTemplate(g, conf)
 	NewMysql()
 
 	return

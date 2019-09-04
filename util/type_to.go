@@ -1,4 +1,4 @@
-package cgo
+package util
 
 import (
 	"fmt"

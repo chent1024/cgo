@@ -1,9 +1,9 @@
 [app]
-mode = 'test'
-timezone = 'Asia/Shanghai'
+mode = 'debug'
+timezone = 'PRC'
 
 [server]
-address = ':9999'
+address = '127.0.0.1:9999'
 readTimeout = 30
 writeTimeout = 30
 ideleTimeout = 10
@@ -17,7 +17,7 @@ password = 'root'
 database = 'juzizm_ppt'
 tablePrefix = 'jz_'
 maxIdleConns = 10
-maxOpenConns = 10
+maxOpenConns = 1000
 connMaxLifeTime = 30
 
 [log]
@@ -26,4 +26,5 @@ path = './logs'
 logDays = 7
 
 [tpl]
+enable = false
 path = './template/*'

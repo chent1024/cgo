@@ -2,11 +2,12 @@ package cgo
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"io"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Debug
@@ -18,10 +19,11 @@ func Debug(format string, values ...interface{}) {
 	t := time.Now().Format("2006/01/02 - 15:04:05")
 	format = fmt.Sprintf("[Cgo] %v | "+format, t)
 	fmt.Fprintf(gin.DefaultWriter, format, values...)
+	fmt.Printf(format, values...)
 }
 
 // Write gin log to file
-func LogToFile() {
+func NewLog() {
 	cfg := Config.Log
 	if !cfg.SaveLogs {
 		return

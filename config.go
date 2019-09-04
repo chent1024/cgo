@@ -15,7 +15,7 @@ var Config struct {
 }
 
 // load config to &Config
-func LoadConfig(path string) {
+func NewConfig(path string) {
 	_, err := toml.DecodeFile(path, &Config)
 	if err != nil {
 		Debug("load config faild, %s", err.Error())
