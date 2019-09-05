@@ -18,8 +18,7 @@ func New(conf *CgoConfig) (g *gin.Engine) {
 	time.LoadLocation(Config.App.Timezone)
 
 	gin.SetMode(Config.App.Mode)
-	// log to file
-	NewLog()
+	NewLogWriter()
 	g = gin.Default()
 	g.Routes()
 	NewTemplate(g, conf)

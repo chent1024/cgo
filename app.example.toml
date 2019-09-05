@@ -1,4 +1,5 @@
 [app]
+# debug release  test
 mode = 'debug'
 timezone = 'PRC'
 
@@ -22,9 +23,14 @@ connMaxLifeTime = 30
 
 [log]
 saveLogs = true
+level = 'info'
 path = './logs'
-logDays = 7
+logName = 'cgo'
 
 [tpl]
 enable = false
 path = './template/*'
+
+[jwt]
+secret = '123^&%$#*((*JHYYU5645GCVBkljh'
+signingMethod = ''

@@ -22,7 +22,7 @@ func NewMysql() {
 		Config.App.Timezone)
 	conn, err := gorm.Open("mysql", dsn)
 	if err != nil {
-		Debug("mysql connect fail, %v", err)
+		Loginfo("mysql connect fail, %v", err)
 		return
 	}
 
@@ -38,7 +38,7 @@ func NewMysql() {
 	Db.DB().SetMaxOpenConns(c.MaxOpenConns)
 	Db.DB().SetConnMaxLifetime(time.Second * time.Duration(c.ConnMaxLifeTime))
 
-	Debug("mysql connect success")
+	Loginfo("mysql connect success")
 	return
 }
 

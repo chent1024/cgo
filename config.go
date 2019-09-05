@@ -12,13 +12,14 @@ var Config struct {
 	Db     config.DbConfig
 	Server config.ServerConfig
 	Tpl    config.TemplateConfig
+	Jwt    config.JwtConfig
 }
 
 // load config to &Config
 func NewConfig(path string) {
 	_, err := toml.DecodeFile(path, &Config)
 	if err != nil {
-		Debug("load config faild, %s", err.Error())
+		Loginfo("load config faild, %s", err.Error())
 		return
 	}
 
