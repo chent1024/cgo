@@ -18,8 +18,9 @@ func New(conf *CgoConfig) (g *gin.Engine) {
 	time.LoadLocation(Config.App.Timezone)
 
 	gin.SetMode(Config.App.Mode)
-	NewLogWriter()
+	// NewLogWriter()
 	g = gin.Default()
+	g.Use(LogrusMiddleware())
 	g.Routes()
 	NewTemplate(g, conf)
 	NewMysql()
