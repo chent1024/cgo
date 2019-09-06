@@ -1,9 +1,11 @@
 package config
 
+import "time"
+
 // server服务
 type ServerConfig struct {
 	Address      string
-	ReadTimeout  int
-	WriteTimeout int
-	IdleTimeout  int
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+	IdleTimeout  time.Duration
 }

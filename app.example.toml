@@ -5,9 +5,9 @@ timezone = 'PRC'
 
 [server]
 address = '127.0.0.1:9999'
-readTimeout = 30
-writeTimeout = 30
-ideleTimeout = 10
+readTimeout = 15
+writeTimeout = 60
+idleTimeout = 15
 
 [db]
 debug = true

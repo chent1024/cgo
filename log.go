@@ -25,6 +25,8 @@ var (
 	reset     = string([]byte{27, 91, 48, 109})
 )
 
+var Logger *logrus.Logger
+
 // Debug
 func Debug(format string, values ...interface{}) {
 	if !strings.HasSuffix(format, "\n") {
@@ -63,21 +65,7 @@ func NewLogWriter() {
 }
 
 func LogrusMiddleware() gin.HandlerFunc {
-	logger := logrus.New()
-
-	os.MkdirAll(Config.Log.Path, os.ModePerm)
-
-	logFile := fmt.Sprintf(Config.Log.Path+"/%s_%s.log", Config.Log.LogName, time.Now().Format("20060102"))
-	src, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
-	if err != nil {
-		Loginfo("log middleware err %v", err)
-	}
-
-	logger.SetFormatter(&logrus.TextFormatter{
-		TimestampFormat: "2006-01-02 15:04:05",
-	})
-	logger.Out = src
-	logger.SetLevel(Config.Log.Level)
+	logger := newLogrus()
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -143,6 +131,29 @@ func LogrusMiddleware() gin.HandlerFunc {
 			reqUri,
 		)
 	}
+}
+
+func newLogrus() *logrus.Logger {
+	logger := logrus.New()
+
+	os.MkdirAll(Config.Log.Path, os.ModePerm)
+
+	logFile := fmt.Sprintf(Config.Log.Path+"/%s_%s.log", Config.Log.LogName, time.Now().Format("20060102"))
+	src, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	if err != nil {
+		Loginfo("log middleware err %v", err)
+	}
+
+	logger.SetFormatter(&logrus.TextFormatter{
+		TimestampFormat: "2006-01-02 15:04:05",
+	})
+	logger.Out = src
+
+	// 供外部调用
+	Logger = logger
+
+	logger.SetLevel(Config.Log.Level)
+	return logger
 }
 
 // stack returns a nicely formatted stack frame, skipping skip frames.

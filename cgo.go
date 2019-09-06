@@ -1,7 +1,9 @@
 package cgo
 
 import (
+	"fmt"
 	"html/template"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -21,9 +23,24 @@ func New(conf *CgoConfig) (g *gin.Engine) {
 	// NewLogWriter()
 	g = gin.Default()
 	g.Use(LogrusMiddleware())
-	g.Routes()
 	NewTemplate(g, conf)
 	NewMysql()
 
-	return
+	return g
+}
+
+func Run(gin *gin.Engine) {
+	fmt.Println(Config.Server)
+	server := &http.Server{
+		Addr:         Config.Server.Address,
+		Handler:      gin,
+		ReadTimeout:  Config.Server.ReadTimeout * time.Second,
+		WriteTimeout: Config.Server.WriteTimeout * time.Second,
+		IdleTimeout:  Config.Server.IdleTimeout * time.Second,
+	}
+
+	err := server.ListenAndServe()
+	if err != nil {
+		Logger.Panic("server err %v", err)
+	}
 }
