@@ -1,7 +1,6 @@
 package cgo
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 	"time"
@@ -30,7 +29,6 @@ func New(conf *CgoConfig) (g *gin.Engine) {
 }
 
 func Run(gin *gin.Engine) {
-	fmt.Println(Config.Server)
 	server := &http.Server{
 		Addr:         Config.Server.Address,
 		Handler:      gin,
@@ -41,6 +39,6 @@ func Run(gin *gin.Engine) {
 
 	err := server.ListenAndServe()
 	if err != nil {
-		Logger.Panic("server err %v", err)
+		Logger.Panic("Listen err ", err)
 	}
 }
