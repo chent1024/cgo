@@ -123,7 +123,7 @@ func LogrusMiddleware() gin.HandlerFunc {
 		reqUri := c.Request.RequestURI
 		statusCode := c.Writer.Status()
 		clientIP := c.ClientIP()
-		logger.Infof("| %3d | %13v | %15s | %s | %s |",
+		logger.Infof("| %3d | %13v | %15s | %s | %s",
 			statusCode,
 			latencyTime,
 			clientIP,
