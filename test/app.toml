@@ -1,0 +1,32 @@
+[app]
+# debug release  test
+mode = 'debug'
+timezone = 'PRC'
+
+[server]
+address = '127.0.0.1:9999'
+readTimeout = 15
+writeTimeout = 60
+idleTimeout = 15
+
+[db]
+debug = true
+host = '127.0.0.1'
+charset = 'utf8'
+username = 'root'
+password = 'root'
+database = 'juzizm_ppt'
+tablePrefix = 'jz_'
+maxIdleConns = 10
+maxOpenConns = 10
+connMaxLifeTime = 30
+
+[log]
+saveLogs = true
+level = 'info'
+path = './logs'
+logName = 'cgo'
+
+[tpl]
+enable = true
+path = './template/*'
