@@ -37,6 +37,12 @@ func (l *LocalDate) Scan(v interface{}) error {
 	return fmt.Errorf("can not convert %v to timestamp", v)
 }
 
+func TodayUnix() int64 {
+	t := time.Now()
+	tm1 := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return tm1.Unix()
+}
+
 func DateNow() string {
 	return time.Now().Format(GoTimeStart)
 }
