@@ -7,7 +7,6 @@ import (
 	"github.com/chent1024/cgo"
 	"github.com/chent1024/cgo/util"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 )
 
 type Resource struct {
@@ -35,9 +34,6 @@ func main() {
 	serv.GET("/", func(context *gin.Context) {
 		cgo.Db.Find(&Resource{}, "id=1")
 
-		cgo.Logger.WithFields(logrus.Fields{
-			"aa": "cccc",
-		}).Info("aaaaaa")
 		fmt.Fprintf(context.Writer, "hello world")
 	})
 	cgo.Run(serv)

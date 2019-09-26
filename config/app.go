@@ -4,4 +4,5 @@ package config
 type AppConfig struct {
 	Mode     string
 	Timezone string
+	RootPath string
 }

@@ -2,6 +2,7 @@
 # debug release  test
 mode = 'debug'
 timezone = 'PRC'
+rootPath ="/Users/ct/go/src/github.com/chent1024/cgo/"
 
 [server]
 address = '127.0.0.1:9999'
