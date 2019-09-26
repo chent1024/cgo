@@ -13,6 +13,7 @@ var Config struct {
 	Server config.ServerConfig
 	Tpl    config.TemplateConfig
 	Jwt    config.JwtConfig
+	Redis  config.RedisConfig
 }
 
 // load config to &Config
