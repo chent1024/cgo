@@ -65,7 +65,7 @@ func NewLogWriter() {
 }
 
 func LogrusMiddleware() gin.HandlerFunc {
-	logger := newLogrus()
+	logger := NewLogrus()
 	return func(c *gin.Context) {
 		defer func() {
 			if err := recover(); err != nil {
@@ -133,7 +133,7 @@ func LogrusMiddleware() gin.HandlerFunc {
 	}
 }
 
-func newLogrus() *logrus.Logger {
+func NewLogrus() *logrus.Logger {
 	logger := logrus.New()
 
 	os.MkdirAll(Config.Log.Path, os.ModePerm)
