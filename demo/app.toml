@@ -24,6 +24,7 @@ connMaxLifeTime = 30
 
 [log]
 saveLogs = true
+single = true
 level = 'info'
 path = './logs'
 logName = 'cgo'

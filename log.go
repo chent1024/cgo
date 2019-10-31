@@ -56,9 +56,13 @@ func NewLogWriter() {
 
 	gin.DisableConsoleColor()
 
-	now := time.Now()
-	// write logs by day
-	logFile := fmt.Sprintf(cfg.Path+"/%s_%s.log", cfg.LogName, now.Format("20060102"))
+	var logFile string
+	if Config.Log.Single {
+		logFile = fmt.Sprintf(cfg.Path+"/%s.log", cfg.LogName)
+	} else {
+		// write logs by day
+		logFile = fmt.Sprintf(cfg.Path+"/%s_%s.log", cfg.LogName, time.Now().Format("20060102"))
+	}
 	f, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	gin.DefaultWriter = io.MultiWriter(f)
 	gin.DefaultErrorWriter = io.MultiWriter(f)
@@ -137,8 +141,12 @@ func NewLogrus() *logrus.Logger {
 	logger := logrus.New()
 
 	os.MkdirAll(Config.Log.Path, os.ModePerm)
-
-	logFile := fmt.Sprintf(Config.Log.Path+"/%s_%s.log", Config.Log.LogName, time.Now().Format("20060102"))
+	var logFile string
+	if Config.Log.Single {
+		logFile = fmt.Sprintf(Config.Log.Path+"/%s.log", Config.Log.LogName)
+	} else {
+		logFile = fmt.Sprintf(Config.Log.Path+"/%s_%s.log", Config.Log.LogName, time.Now().Format("20060102"))
+	}
 	src, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		Loginfo("log middleware err %v", err)
