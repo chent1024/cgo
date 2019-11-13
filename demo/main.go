@@ -3,8 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"time"
-
 	"github.com/chent1024/cgo"
 	"github.com/chent1024/cgo/util"
 	"github.com/gin-gonic/gin"
@@ -33,11 +31,11 @@ func main() {
 
 	serv := cgo.New(config)
 	serv.GET("/", func(context *gin.Context) {
-		cgo.Db.Find(&Resource{}, "id=1")
-		redisClient := cgo.NewRedis()
-		_, err1 := redisClient.Set("aaa", 111, time.Hour).Result()
-		val, err2 := redisClient.Get("aaa").Result()
-		cgo.Debug("", redisClient, val, err1, err2)
+		//cgo.Db.Find(&Resource{}, "id=1")
+		//redisClient := cgo.NewRedis()
+		//_, err1 := redisClient.Set("aaa", 111, time.Hour).Result()
+		//val, err2 := redisClient.Get("aaa").Result()
+		//cgo.Debug("", redisClient, val, err1, err2)
 		fmt.Fprintf(context.Writer, "hello world")
 	})
 	cgo.Run(serv)
