@@ -47,6 +47,12 @@ func DateNow() string {
 	return time.Now().Format(GoTimeStart)
 }
 
+func DateAdd(day int) string {
+	t := time.Now()
+	tm1 := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	return tm1.AddDate(0, 0, day).Format(GoTimeStart)
+}
+
 func DateTime() int64 {
 	return time.Now().Unix()
 }
