@@ -3,12 +3,15 @@ package cgo
 import (
 	"bytes"
 	"fmt"
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/rifflock/lfshook"
 	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"os"
+	"path"
 	"runtime"
 	"strings"
 	"time"
@@ -141,26 +144,36 @@ func NewLogrus() *logrus.Logger {
 	logger := logrus.New()
 
 	os.MkdirAll(Config.Log.Path, os.ModePerm)
-	var logFile string
-	if Config.Log.Single {
-		logFile = fmt.Sprintf(Config.Log.Path+"/%s.log", Config.Log.LogName)
-	} else {
-		logFile = fmt.Sprintf(Config.Log.Path+"/%s_%s.log", Config.Log.LogName, time.Now().Format("20060102"))
-	}
+	logPath := path.Join(Config.Log.Path, Config.Log.LogName)
+	logFile := fmt.Sprintf("%s.log", logPath)
 	src, err := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	if err != nil {
 		Loginfo("log middleware err %v", err)
 	}
 
-	logger.SetFormatter(&logrus.TextFormatter{
+	logger.Out = src
+	logger.SetLevel(Config.Log.Level)
+	logWriter, err := rotatelogs.New(
+		logPath+"_%Y%m%d.log",
+		rotatelogs.WithLinkName(logFile),
+		rotatelogs.WithMaxAge(7*24*time.Hour),
+	)
+	writeMap := lfshook.WriterMap{
+		logrus.InfoLevel:  logWriter,
+		logrus.FatalLevel: logWriter,
+		logrus.DebugLevel: logWriter,
+		logrus.WarnLevel:  logWriter,
+		logrus.ErrorLevel: logWriter,
+		logrus.PanicLevel: logWriter,
+	}
+	lfHook := lfshook.NewHook(writeMap, &logrus.JSONFormatter{
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
-	logger.Out = src
+	// 新增 Hook
+	logger.AddHook(lfHook)
 
 	// 供外部调用
 	Logger = logger
-
-	logger.SetLevel(Config.Log.Level)
 	return logger
 }
 
