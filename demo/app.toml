@@ -1,5 +1,6 @@
 [app]
 # debug release  test
+name='test'
 mode = 'debug'
 timezone = 'PRC'
 rootPath ="/Users/ct/go/src/github.com/chent1024/cgo/"
