@@ -34,7 +34,8 @@ func Authorization() gin.HandlerFunc {
 		}
 
 		if len(token) > 1 {
-			authInfo, err = util.DesDecryptStr(token[1], cgo.Config.Authorization.EncryptKey, cgo.Config.Authorization.EncryptIv)
+			conf := cgo.Config.Authorization
+			authInfo, err = util.DesDecryptStr(token[1], conf.EncryptKey, conf.EncryptIv)
 		}
 		if err != nil || authInfo == nil {
 			if !isExceptRoute(path) {
