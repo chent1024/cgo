@@ -19,14 +19,19 @@ type CgoConfig struct {
 
 // New cgo with gin
 func New(conf *CgoConfig) (g *gin.Engine) {
+	// load config
 	NewConfig(conf.ConfigPath)
 	time.LoadLocation(Config.App.Timezone)
 
+	// new gin
 	gin.SetMode(Config.App.Mode)
-	// NewLogWriter()
 	g = gin.Default()
 	g.Use(LogrusMiddleware())
-	NewTemplate(g, conf)
+
+	// is use template
+	if Config.Tpl.Enable && Config.Tpl.Path != "" {
+		NewTemplate(g, conf)
+	}
 	NewMysql()
 
 	return g
@@ -58,7 +63,7 @@ func Run(gin *gin.Engine) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		log.Fatal("Server Shutdown Err:", err)
+		log.Fatal("Server Shutdown Err: ", err)
 	}
 
 	log.Println("Server Shutdown Success")

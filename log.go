@@ -3,9 +3,6 @@ package cgo
 import (
 	"bytes"
 	"fmt"
-	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
-	"github.com/rifflock/lfshook"
-	"io"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -15,6 +12,9 @@ import (
 	"runtime"
 	"strings"
 	"time"
+
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/rifflock/lfshook"
 
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -49,27 +49,28 @@ func Loginfo(format string, values ...interface{}) {
 	fmt.Fprintf(gin.DefaultWriter, format, values...)
 }
 
-// Custom log writer to file
-func NewLogWriter() {
-	cfg := Config.Log
-	if !cfg.SaveLogs {
-		return
-	}
-	os.MkdirAll(cfg.Path, os.ModePerm)
-
-	gin.DisableConsoleColor()
-
-	var logFile string
-	if Config.Log.Single {
-		logFile = fmt.Sprintf(cfg.Path+"/%s.log", cfg.LogName)
-	} else {
-		// write logs by day
-		logFile = fmt.Sprintf(cfg.Path+"/%s_%s.log", cfg.LogName, time.Now().Format("20060102"))
-	}
-	f, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
-	gin.DefaultWriter = io.MultiWriter(f)
-	gin.DefaultErrorWriter = io.MultiWriter(f)
-}
+//
+//// Custom log writer to file
+//func NewLogWriter() {
+//	cfg := Config.Log
+//	if !cfg.SaveLogs {
+//		return
+//	}
+//	os.MkdirAll(cfg.Path, os.ModePerm)
+//
+//	gin.DisableConsoleColor()
+//
+//	var logFile string
+//	if Config.Log.Single {
+//		logFile = fmt.Sprintf(cfg.Path+"/%s.log", cfg.LogName)
+//	} else {
+//		// write logs by day
+//		logFile = fmt.Sprintf(cfg.Path+"/%s_%s.log", cfg.LogName, time.Now().Format("20060102"))
+//	}
+//	f, _ := os.OpenFile(logFile, os.O_APPEND|os.O_CREATE|os.O_WRONLY, os.ModePerm)
+//	gin.DefaultWriter = io.MultiWriter(f)
+//	gin.DefaultErrorWriter = io.MultiWriter(f)
+//}
 
 func LogrusMiddleware() gin.HandlerFunc {
 	logger := NewLogrus()
