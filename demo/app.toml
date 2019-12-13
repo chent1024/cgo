@@ -33,3 +33,10 @@ logName = 'cgo'
 [tpl]
 enable = true
 path = './template/*'
+
+[authorization]
+#3des key 24位
+encryptKey = 'ioKUIhgfc^&*(GFYFYcbjbfL'
+#3des iv 8位
+encryptIv = '12345678'
+expectRouter = ["/"]

@@ -1,28 +1,33 @@
 package cgo
 
 import (
+	"fmt"
+
 	"github.com/BurntSushi/toml"
 	"github.com/chent1024/cgo/config"
 )
 
 // define Config struct
 var Config struct {
-	App    config.AppConfig
-	Log    config.LogConfig
-	Db     config.DbConfig
-	Server config.ServerConfig
-	Tpl    config.TemplateConfig
-	Jwt    config.JwtConfig
-	Redis  config.RedisConfig
+	App           config.AppConfig
+	Log           config.LogConfig
+	Db            config.DbConfig
+	Server        config.ServerConfig
+	Tpl           config.TemplateConfig
+	Jwt           config.JwtConfig
+	Redis         config.RedisConfig
+	Authorization config.AuthorizationConfig
 }
 
-// load config to &Config
+// new Config
 func NewConfig(path string) {
-	_, err := toml.DecodeFile(path, &Config)
-	if err != nil {
-		Loginfo("load config faild, %s", err.Error())
-		return
-	}
+	LoadConfig(path, &Config)
+}
 
-	return
+// Load config
+func LoadConfig(path string, resp interface{}) {
+	_, err := toml.DecodeFile(path, resp)
+	if err != nil {
+		panic(fmt.Sprintf("Load config failed, %#v", err.Error()))
+	}
 }

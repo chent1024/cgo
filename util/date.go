@@ -58,9 +58,10 @@ func DateTime() int64 {
 }
 
 func Str2Time(s string) (int64, error) {
-	t, err := time.Parse(GoTimeStart, s)
+	t, err := time.ParseInLocation(GoTimeStart, s, time.Local)
 	if err != nil {
 		return 0, err
 	}
+
 	return t.Unix(), nil
 }

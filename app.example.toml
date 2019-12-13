@@ -43,3 +43,10 @@ network="tcp"
 address="127.0.0.1:6379"
 password=""
 db=0
+
+[authorization]
+#3des key 24位
+encryptKey = 'ioJKUIhgfc^&*(GFYFYcbjbfL'
+#3des iv 8位
+encryptIv = '12345678'
+expectRouter = []
