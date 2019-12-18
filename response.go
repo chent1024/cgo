@@ -20,12 +20,12 @@ func ResponseSuccess(ctx *gin.Context, data interface{}) {
 
 // 返回 权限校验 失败json
 func ResponseNoAuth(ctx *gin.Context) {
-	ctx.JSON(200, JsonMsg(-1, nil, "权限校验失败~"))
+	ctx.JSON(200, JsonMsg(-1, nil, "Not authorized"))
 }
 
 // 返回 参数校验 失败json
 func ResponseParamErr(ctx *gin.Context) {
-	ctx.JSON(200, JsonMsg(-1, nil, "参数错误~"))
+	ctx.JSON(200, JsonMsg(-1, nil, "Param err"))
 }
 
 // 返回 404错误 json
